@@ -49,7 +49,7 @@ class TerraformController(IEnvironmentController):
                 file.write(filedata)
         working_dir = os.path.join(os.path.dirname(__file__), '../terraform', self.config['cloud_provider'], self.config['tf_backend'])
 
-        self.terraform = Terraform(working_dir=working_dir,variables=variables, parallelism=15 ,state=config["statepath"])
+        self.terraform = Terraform(working_dir=working_dir,variables=variables, parallelism=15 ,state=config.get("statepath"))
 
 
     def build(self):
@@ -151,6 +151,17 @@ class TerraformController(IEnvironmentController):
                             if instance['vm_obj'].instance_view.statuses[1].display_status == "VM running":
                                 result = splunk_sdk.test_baseline_search(instance['public_ip'], str(self.config['attack_range_password']), baseline['search'], baseline_obj['pass_condition'], baseline['name'], baseline_obj['file'], baseline_obj['earliest_time'], baseline_obj['latest_time'], self.log)
                                 results_baselines.append(result)
+                        else:
+                            # TODO: Check instance is running or not
+                            print("In baseline")
+                            print(self.config["splunk_instance_ip"])
+                            print(self.config["splunk_rest_port"])
+                            print(str(self.config['attack_range_password']))
+                            instance_ip = self.config["splunk_instance_ip"]
+                            rest_port = self.config["splunk_rest_port"]
+                            result = splunk_sdk.test_baseline_search(instance_ip, str(self.config['attack_range_password']), baseline['search'], baseline_obj['pass_condition'], baseline['name'], baseline_obj['file'], baseline_obj['earliest_time'], baseline_obj['latest_time'], self.log, rest_port)
+                            self.log.info(f"result for baseline search {baseline}: {result}")
+                            results_baselines.append(result)
                     result_test['baselines_result'] = results_baselines
 
                 # validate detection works
@@ -176,6 +187,23 @@ class TerraformController(IEnvironmentController):
                         if test_delete_data:
                             self.log.info("deleting test data from splunk for test {0}".format(detection_file_name))
                             splunk_sdk.delete_attack_data(instance['public_ip'], str(self.config['attack_range_password']))
+                else:
+                    # TODO: Check instance is running or not
+                    instance_ip = self.config["splunk_instance_ip"]
+                    rest_port = self.config["splunk_rest_port"]
+                    self.log.info(
+                        f"Detection execution started with instance: {instance_ip}, rest_port: {rest_port}, "
+                        f"attack_range_password: {self.config['attack_range_password']}")
+                    result_detection = splunk_sdk.test_detection_search(instance_ip,
+                                                                        str(self.config['attack_range_password']),
+                                                                        detection['search'], test['pass_condition'],
+                                                                        detection['name'], test['file'],
+                                                                        test['earliest_time'], test['latest_time'],
+                                                                        self.log, rest_port)
+                    self.log.info(f"result for detection search {detection['search']}: {result_detection}")
+                    if test_delete_data:
+                        self.log.info("deleting test data from splunk for test {0}".format(detection_file_name))
+                        splunk_sdk.delete_attack_data(instance_ip, str(self.config['attack_range_password']))
 
                 result_detection['detection_name'] = test['name']
                 result_detection['detection_file'] = test['file']
@@ -415,14 +443,22 @@ class TerraformController(IEnvironmentController):
             splunk_ip = aws_service.get_single_instance_public_ip("ar-splunk-" + self.config['range_name'] + "-" + self.config['key_name'], self.config)
         elif self.config['cloud_provider'] == 'azure':
             splunk_ip = azure_service.get_instance(self.config, "ar-splunk-" + self.config['range_name'] + "-" + self.config['key_name'], self.log)['public_ip']
+        else:
+            # Splunk IP for orca instance
+            splunk_ip = self.config["splunk_instance_ip"]
+            print(f"splunk IP {splunk_ip}")
 
         # preset our ansible vars
+        print("Config variables")
+        print(self.config['private_key_path'])
+        print(self.config['attack_range_password'])
+        print(self.config["splunk_ssh_port"])
         ansible_vars = {}
         ansible_vars['dump_name'] = dump_name
-        ansible_vars['ansible_user'] = 'ubuntu'
+        ansible_vars['ansible_user'] = 'splunk'
         ansible_vars['ansible_ssh_private_key_file'] = self.config['private_key_path']
         ansible_vars['splunk_password'] = self.config['attack_range_password']
-        ansible_vars['ansible_port'] = 22
+        ansible_vars['ansible_port'] = self.config["splunk_ssh_port"]
 
         ansible_vars['out'] = attack_data['file_name']
         ansible_vars['sourcetype'] = attack_data['sourcetype']
@@ -437,7 +473,7 @@ class TerraformController(IEnvironmentController):
             ansible_vars['local_data'] = True
 
         # call ansible
-        cmdline = "-i %s, -u ubuntu" % (splunk_ip)
+        cmdline = "-i %s, -u splunk" % (splunk_ip)
         runner = ansible_runner.run(private_data_dir=os.path.join(os.path.dirname(__file__), '../'),
                                     cmdline=cmdline,
                                     roles_path=os.path.join(os.path.dirname(__file__), '../ansible/roles'),

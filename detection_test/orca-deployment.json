@@ -1,0 +1,68 @@
+{
+    "rushabhs": {
+        "rushabhs210909055736eo2qa": {
+            "containers": {
+                "/rushabhs210909055736eo2qa_so1_1.1.fxyttdt5o159o27f7ihkns9nv": {
+                    "Created": "2021-09-09T05:57:43.121575461Z",
+                    "ID": "46a1fcc4818f420a089aa54a4d94908a5bb266a586640d36b32e7365c4132ea6",
+                    "Node": "ip-10-224-104-192.us-west-2.compute.internal",
+                    "Ports": {
+                        "1514/tcp": "10.224.104.192:53842",
+                        "2222/tcp": "10.224.104.192:53841",
+                        "3333/tcp": "10.224.104.192:53840",
+                        "3333/udp": "10.224.104.192:12424",
+                        "8000/tcp": "10.224.104.192:53839",
+                        "8065/tcp": "Unmapped",
+                        "8088/tcp": "10.224.104.192:53838",
+                        "8089/tcp": "10.224.104.192:53837",
+                        "8191/tcp": "10.224.104.192:53836",
+                        "9887/tcp": "Unmapped",
+                        "9997/tcp": "10.224.104.192:53835"
+                    },
+                    "StartedAt": "2021-09-09T05:57:44.186664483Z",
+                    "Status": "running",
+                    "cloud": "docker",
+                    "com.docker.swarm.affinities": "[com.splunk.orca.performance!=true]",
+                    "com.docker.swarm.constraints": "[com.splunk.orca.workload.test==true, ostype==linux]",
+                    "com.docker.swarm.node.id": "zxvoi20dzofkr8ietx9rwzv8q",
+                    "com.docker.swarm.service.id": "rqfjczb4qwwe38ubztvk12q9m",
+                    "com.docker.swarm.service.name": "rushabhs210909055736eo2qa_so1_1",
+                    "com.docker.swarm.task": "",
+                    "com.docker.swarm.task.id": "fxyttdt5o159o27f7ihkns9nv",
+                    "com.docker.swarm.task.name": "rushabhs210909055736eo2qa_so1_1.1.fxyttdt5o159o27f7ihkns9nv",
+                    "com.docker.ucp.access.label": "test",
+                    "com.docker.ucp.collection": "9c5e5dda-f667-41b7-8669-001ed1d788ae",
+                    "com.docker.ucp.collection.66f9cd24-8567-40c9-addd-f8432e902334": "true",
+                    "com.docker.ucp.collection.9c5e5dda-f667-41b7-8669-001ed1d788ae": "true",
+                    "com.docker.ucp.collection.root": "true",
+                    "com.docker.ucp.collection.shared": "true",
+                    "com.docker.ucp.collection.swarm": "true",
+                    "com.splunk.orca": "true",
+                    "com.splunk.orca.cluster_affinity": "test",
+                    "com.splunk.orca.creator": "rushabhs",
+                    "com.splunk.orca.deployment_id": "rushabhs210909055736eo2qa",
+                    "com.splunk.orca.deployment_type": "S1",
+                    "com.splunk.orca.owner": "rushabhs",
+                    "com.splunk.orca.performance": "false",
+                    "com.splunk.orca.platform": "x64_debian_9",
+                    "com.splunk.orca.role": "standalone",
+                    "com.splunk.orca.run_id": "d365db5d-7019-416a-8514-25330f801669",
+                    "com.splunk.orca.service": "so1",
+                    "com.splunk.orca.version": "1.3.3",
+                    "image": "repo.splunk.com/splunk/products/splunk-orca@sha256:a7dcc39fe30d83fd989a6c85257cda28a3c4b902d8415c360cf4445ba0ed8d18",
+                    "maintainer": "support@splunk.com",
+                    "platform": "x64_debian_9",
+                    "private_address": "10.4.180.3",
+                    "role": "standalone",
+                    "splunk_address": "https://10.224.104.192:53839",
+                    "splunk_password": "Chang3d!",
+                    "splunkd_address": "https://10.224.104.192:53837",
+                    "ssh_address": "10.224.104.192"
+                }
+            },
+            "deployment_type": "S1",
+            "manager_url": "https://ucp.west.splunkeng.com/#/applications/",
+            "scenario": "Unknown"
+        }
+    }
+}

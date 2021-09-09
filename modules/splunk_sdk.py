@@ -5,11 +5,11 @@ import splunklib.client as client
 import splunklib.results as results
 import requests
 
-def test_baseline_search(splunk_host, splunk_password, search, pass_condition, baseline_name, baseline_file, earliest_time, latest_time, log):
+def test_baseline_search(splunk_host, splunk_password, search, pass_condition, baseline_name, baseline_file, earliest_time, latest_time, log, rest_port="8089"):
     try:
         service = client.connect(
             host=splunk_host,
-            port=8089,
+            port=rest_port,
             username='admin',
             password=splunk_password
         )
@@ -44,7 +44,9 @@ def test_baseline_search(splunk_host, splunk_password, search, pass_condition, b
     test_results['baseline_file'] = baseline_file
     test_results['scanCount'] = job['scanCount']
 
-    if int(job['resultCount']) != 1:
+    print("Baseline job count")
+    print(job['resultCount'])
+    if int(job['resultCount']) < 1:
         log.error("Test failed for baseline: " + baseline_name)
         test_results['error'] = True
         return test_results
@@ -54,11 +56,11 @@ def test_baseline_search(splunk_host, splunk_password, search, pass_condition, b
         return test_results
 
 
-def test_detection_search(splunk_host, splunk_password, search, pass_condition, detection_name, detection_file, earliest_time, latest_time, log):
+def test_detection_search(splunk_host, splunk_password, search, pass_condition, detection_name, detection_file, earliest_time, latest_time, log, rest_port="8089"):
     try:
         service = client.connect(
             host=splunk_host,
-            port=8089,
+            port=rest_port,
             username='admin',
             password=splunk_password
         )
@@ -79,9 +81,12 @@ def test_detection_search(splunk_host, splunk_password, search, pass_condition, 
               "dispatch.latest_time": latest_time}
 
     splunk_search = search + ' ' + pass_condition
-
+    print("splunk_search")
+    print(search)
+    print(splunk_search)
     try:
         job = service.jobs.create(splunk_search, **kwargs)
+        print(job)
     except Exception as e:
         log.error("Unable to execute detection: " + str(e))
         return 1, {}
@@ -92,8 +97,8 @@ def test_detection_search(splunk_host, splunk_password, search, pass_condition, 
     test_results['detection_name'] = detection_name
     test_results['detection_file'] = detection_file
     test_results['scanCount'] = job['scanCount']
-
-    if int(job['resultCount']) != 1:
+    print(job['resultCount'])
+    if int(job['resultCount']) < 1:
         log.error("test failed for detection: " + detection_name)
         test_results['error'] = True
         return test_results
