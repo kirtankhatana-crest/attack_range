@@ -133,7 +133,7 @@ class TerraformController(IEnvironmentController):
                 if 'baselines' in test:
                     results_baselines = []
                     for baseline_obj in test['baselines']:
-                        baseline_file_name = baseline_obj['file']
+                        baseline_file_name = baseline_obj['file'].replace("baselines/", "detections/cloud/")
                         baseline = self.load_file(os.path.join(os.path.dirname(__file__), '../' + self.config['security_content_path'] + '/' + baseline_file_name))
                         result_obj = dict()
                         result_obj['baseline'] = baseline_obj['name']
