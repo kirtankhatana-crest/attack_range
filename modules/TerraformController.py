@@ -122,7 +122,7 @@ class TerraformController(IEnvironmentController):
                     else:
                         attack_data['update_timestamp'] = False
                     #attack_data['update_timestamp'] = True
-                    attack_data['index'] = 'test'
+                    attack_data['index'] = 'main'
                     self.replay_attack_data(dump_name, attack_data)
 
                 # wait for indexing
@@ -455,7 +455,7 @@ class TerraformController(IEnvironmentController):
         print(self.config["splunk_ssh_port"])
         ansible_vars = {}
         ansible_vars['dump_name'] = dump_name
-        ansible_vars['ansible_user'] = 'splunk'
+        ansible_vars['ansible_user'] = 'splunker'
         ansible_vars['ansible_ssh_private_key_file'] = self.config['private_key_path']
         ansible_vars['splunk_password'] = self.config['attack_range_password']
         ansible_vars['ansible_port'] = self.config["splunk_ssh_port"]
@@ -473,7 +473,7 @@ class TerraformController(IEnvironmentController):
             ansible_vars['local_data'] = True
 
         # call ansible
-        cmdline = "-i %s, -u splunk" % (splunk_ip)
+        cmdline = "-i %s, -u splunker" % (splunk_ip)
         runner = ansible_runner.run(private_data_dir=os.path.join(os.path.dirname(__file__), '../'),
                                     cmdline=cmdline,
                                     roles_path=os.path.join(os.path.dirname(__file__), '../ansible/roles'),
