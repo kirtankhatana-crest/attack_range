@@ -24,7 +24,7 @@ class ConfigurationSet:
 
         # Set 
         configuration._sections['global']['cloud_provider'] = "orca"
-        configuration._sections['range_settings']['private_key_path'] = ""
+        configuration._sections['range_settings']['private_key_path'] = "/Users/rushabhs/.orca/id_rsa"
 
         # Set orca variables
         self.set_orca_variables(configuration, orca_json)
