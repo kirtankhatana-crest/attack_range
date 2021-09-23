@@ -5,17 +5,17 @@ import splunklib.client as client
 import splunklib.results as results
 import requests
 
-def test_baseline_search(splunk_host, splunk_password, search, pass_condition, baseline_name, baseline_file, earliest_time, latest_time, log):
+def test_baseline_search(splunk_host, splunk_password, search, pass_condition, baseline_name, baseline_file, earliest_time, latest_time, log, rest_port=8089):
     try:
         service = client.connect(
             host=splunk_host,
-            port=8089,
+            port=rest_port,
             username='admin',
             password=splunk_password
         )
     except Exception as e:
         log.error("Unable to connect to Splunk instance: " + str(e))
-        return 1, {}
+        return {}
 
     # search and replace \\ with \\\
     # search = search.replace('\\','\\\\')
@@ -35,7 +35,7 @@ def test_baseline_search(splunk_host, splunk_password, search, pass_condition, b
         job = service.jobs.create(splunk_search, **kwargs)
     except Exception as e:
         log.error("Unable to execute baseline: " + str(e))
-        return 1, {}
+        return {}
 
     test_results = dict()
     test_results['diskUsage'] = job['diskUsage']
@@ -54,17 +54,17 @@ def test_baseline_search(splunk_host, splunk_password, search, pass_condition, b
         return test_results
 
 
-def test_detection_search(splunk_host, splunk_password, search, pass_condition, detection_name, detection_file, earliest_time, latest_time, log):
+def test_detection_search(splunk_host, splunk_password, search, pass_condition, detection_name, detection_file, earliest_time, latest_time, log, rest_port=8089):
     try:
         service = client.connect(
             host=splunk_host,
-            port=8089,
+            port=rest_port,
             username='admin',
             password=splunk_password
         )
     except Exception as e:
         log.error("Unable to connect to Splunk instance: " + str(e))
-        return 1, {}
+        return {}
 
     # search and replace \\ with \\\
     # search = search.replace('\\','\\\\')
@@ -84,7 +84,7 @@ def test_detection_search(splunk_host, splunk_password, search, pass_condition, 
         job = service.jobs.create(splunk_search, **kwargs)
     except Exception as e:
         log.error("Unable to execute detection: " + str(e))
-        return 1, {}
+        return {}
 
     test_results = dict()
     test_results['diskUsage'] = job['diskUsage']
