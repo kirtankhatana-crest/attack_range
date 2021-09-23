@@ -49,7 +49,7 @@ tf_backend_storage_account = attackrangestorage
 tf_backend_container = tfstate
 # only needed when you specify a remote backend
 
-[orca_instance]
+[orca]
 splunk_instance_ip = 127.0.0.1
 # Splunk IP set from orca
 
