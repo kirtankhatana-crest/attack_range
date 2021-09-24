@@ -49,7 +49,7 @@ class TerraformController(IEnvironmentController):
                 file.write(filedata)
         working_dir = os.path.join(os.path.dirname(__file__), '../terraform', self.config['cloud_provider'], self.config['tf_backend'])
 
-        self.terraform = Terraform(working_dir=working_dir,variables=variables, parallelism=15 ,state=config["statepath"])
+        self.terraform = Terraform(working_dir=working_dir,variables=variables, parallelism=15 ,state=config.get("statepath"))
 
 
     def build(self):
@@ -476,7 +476,7 @@ class TerraformController(IEnvironmentController):
             ansible_vars['local_data'] = True
 
         # call ansible
-        cmdline = "-i %s, -u %s" % (splunk_ip, user)
+        cmdline = "-i %s, -u %s" % (splunk_ip, ansible_user)
         runner = ansible_runner.run(private_data_dir=os.path.join(os.path.dirname(__file__), '../'),
                                     cmdline=cmdline,
                                     roles_path=os.path.join(os.path.dirname(__file__), '../ansible/roles'),
