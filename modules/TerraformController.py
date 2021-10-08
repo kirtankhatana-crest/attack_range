@@ -187,7 +187,7 @@ class TerraformController(IEnvironmentController):
 
             if test_delete_data:
                 self.log.info("deleting test data from splunk for test {0}".format(test['file']))
-                splunk_sdk.delete_attack_data(instance_ip, str(self.config['attack_range_password']))
+                splunk_sdk.delete_attack_data(instance_ip, str(self.config['attack_range_password']), rest_port)
 
         return result
 

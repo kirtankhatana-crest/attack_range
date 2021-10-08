@@ -211,11 +211,11 @@ def export_search(host, s, password, export_mode="raw", out=sys.stdout, username
 
 
 
-def delete_attack_data(splunk_host, splunk_password):
+def delete_attack_data(splunk_host, splunk_password, splunk_mgmt_port=8089):
     try:
         service = client.connect(
             host=splunk_host,
-            port=8089,
+            port=splunk_mgmt_port,
             username='admin',
             password=splunk_password
         )

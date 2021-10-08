@@ -27,7 +27,8 @@
 
 
 - name: running datamanipulation.py, update_timestamp set
-  command: /usr/bin/python3 datamanipulation.py --path /tmp/{{dump_name}}/{{out}} --source {{source}} --sourcetype {{sourcetype}}
+  shell:
+    cmd: /usr/bin/python3 datamanipulation.py --path /tmp/{{dump_name}}/{{out}} --source {{source}} --sourcetype {{sourcetype}}
     chdir: /tmp/
   when: update_timestamp | bool
 
