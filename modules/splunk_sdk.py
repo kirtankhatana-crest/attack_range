@@ -93,6 +93,8 @@ def test_detection_search(splunk_host, splunk_password, search, pass_condition, 
     test_results['detection_file'] = detection_file
     test_results['scanCount'] = job['scanCount']
 
+    log.info(f"Job Result : {job}")
+
     if int(job['resultCount']) != 1:
         log.error("test failed for detection: " + detection_name)
         test_results['error'] = True
