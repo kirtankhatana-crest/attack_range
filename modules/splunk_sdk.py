@@ -44,10 +44,9 @@ def test_baseline_search(splunk_host, splunk_password, search, pass_condition, b
     test_results['baseline_name'] = baseline_name
     test_results['baseline_file'] = baseline_file
     test_results['scanCount'] = job['scanCount']
-
-    print("-----------------------------------------------")
-    pprint(vars(job))
-    print("-----------------------------------------------")
+    test_results['search_query'] = job['search']
+    test_results['resultCount'] = job['resultCount']
+    test_results['message'] = job.get('messages')
 
     if int(job['resultCount']) != 1:
         log.error("Test failed for baseline: " + baseline_name)
@@ -97,10 +96,10 @@ def test_detection_search(splunk_host, splunk_password, search, pass_condition, 
     test_results['detection_name'] = detection_name
     test_results['detection_file'] = detection_file
     test_results['scanCount'] = job['scanCount']
+    test_results['search_query'] = job['search']
+    test_results['resultCount'] = job['resultCount']
+    test_results['message'] = job['messages']
 
-    print("-----------------------------------------------")
-    pprint(vars(job))
-    print("-----------------------------------------------")
 
     if int(job['resultCount']) != 1:
         log.error("test failed for detection: " + detection_name)
