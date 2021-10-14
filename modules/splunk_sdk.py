@@ -38,19 +38,20 @@ def test_baseline_search(splunk_host, splunk_password, search, pass_condition, b
         log.error("Unable to execute baseline: " + str(e))
         return {}
 
-    test_results = dict()
-    test_results['diskUsage'] = job['diskUsage']
-    test_results['runDuration'] = job['runDuration']
-    test_results['baseline_name'] = baseline_name
-    test_results['baseline_file'] = baseline_file
-    test_results['scanCount'] = job['scanCount']
-
-    print("-----------------------------------------------")
-    for property, value in vars(job).items():
-        print(property, ":", value)
-    print("-----------------------------------------------")
-    print(dir(job))
-    print("-----------------------------------------------")
+    log.info("Before test_result in test_baseline_search")
+    try:
+        test_results = dict()
+        test_results['diskUsage'] = job['diskUsage']
+        test_results['runDuration'] = job['runDuration']
+        test_results['baseline_name'] = baseline_name
+        test_results['baseline_file'] = baseline_file
+        test_results['scanCount'] = job['scanCount']
+        test_results["search"] = job["search"]
+        test_results["resultCount"] = job['resultCount']
+        test_results["message"] = job["message"]
+    except Exception as exc:
+        log.info(f"Caught an exception during updating test_results in test_baseline_search, exception: {exc}")
+    log.info(f"After test_result in test_baseline_search : {test_results}")
 
 
     if int(job['resultCount']) != 1:
@@ -95,19 +96,20 @@ def test_detection_search(splunk_host, splunk_password, search, pass_condition, 
         log.error("Unable to execute detection: " + str(e))
         return {}
 
-    test_results = dict()
-    test_results['diskUsage'] = job['diskUsage']
-    test_results['runDuration'] = job['runDuration']
-    test_results['detection_name'] = detection_name
-    test_results['detection_file'] = detection_file
-    test_results['scanCount'] = job['scanCount']
-
-    print("-----------------------------------------------")
-    for property, value in vars(job).items():
-        print(property, ":", value)
-    print("-----------------------------------------------")
-    print(dir(job))
-    print("-----------------------------------------------")
+    log.info("Before test_result in test_detection_search")
+    try:
+        test_results = dict()
+        test_results['diskUsage'] = job['diskUsage']
+        test_results['runDuration'] = job['runDuration']
+        test_results['detection_name'] = detection_name
+        test_results['detection_file'] = detection_file
+        test_results['scanCount'] = job['scanCount']
+        test_results["search"] = job["search"]
+        test_results["resultCount"] = job['resultCount']
+        test_results["message"] = job["message"]
+    except Exception as exc:
+        log.info(f"Caught an exception during updating test_results in test_detection_search, exception: {exc}")
+    log.info(f"After test_result in test_detection_search {test_results}")
 
 
     if int(job['resultCount']) != 1:
