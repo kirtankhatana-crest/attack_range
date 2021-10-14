@@ -48,7 +48,7 @@ def test_baseline_search(splunk_host, splunk_password, search, pass_condition, b
         test_results['scanCount'] = job['scanCount']
         test_results["search"] = job["search"]
         test_results["resultCount"] = job['resultCount']
-        test_results["message"] = job["message"]
+        test_results["messages"] = job["messages"]
     except Exception as exc:
         log.info(f"Caught an exception during updating test_results in test_baseline_search, exception: {exc}")
     log.info(f"After test_result in test_baseline_search : {test_results}")
@@ -106,7 +106,7 @@ def test_detection_search(splunk_host, splunk_password, search, pass_condition, 
         test_results['scanCount'] = job['scanCount']
         test_results["search"] = job["search"]
         test_results["resultCount"] = job['resultCount']
-        test_results["message"] = job["message"]
+        test_results["messages"] = job["messages"]
     except Exception as exc:
         log.info(f"Caught an exception during updating test_results in test_detection_search, exception: {exc}")
     log.info(f"After test_result in test_detection_search {test_results}")
