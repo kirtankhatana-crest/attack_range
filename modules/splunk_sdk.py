@@ -3,6 +3,7 @@ from time import sleep
 import splunklib.results as results
 import splunklib.client as client
 import splunklib.results as results
+from pprint import pprint
 import requests
 
 def test_baseline_search(splunk_host, splunk_password, search, pass_condition, baseline_name, baseline_file, earliest_time, latest_time, log, rest_port=8089):
@@ -43,6 +44,10 @@ def test_baseline_search(splunk_host, splunk_password, search, pass_condition, b
     test_results['baseline_name'] = baseline_name
     test_results['baseline_file'] = baseline_file
     test_results['scanCount'] = job['scanCount']
+
+    print("-----------------------------------------------")
+    pprint(vars(job))
+    print("-----------------------------------------------")
 
     if int(job['resultCount']) != 1:
         log.error("Test failed for baseline: " + baseline_name)
@@ -93,7 +98,9 @@ def test_detection_search(splunk_host, splunk_password, search, pass_condition, 
     test_results['detection_file'] = detection_file
     test_results['scanCount'] = job['scanCount']
 
-    log.info(f"Job Result : {job}")
+    print("-----------------------------------------------")
+    pprint(vars(job))
+    print("-----------------------------------------------")
 
     if int(job['resultCount']) != 1:
         log.error("test failed for detection: " + detection_name)
