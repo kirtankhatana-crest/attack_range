@@ -46,20 +46,9 @@ def test_baseline_search(splunk_host, splunk_password, search, pass_condition, b
         test_results['baseline_name'] = baseline_name
         test_results['baseline_file'] = baseline_file
         test_results['scanCount'] = job['scanCount']
-        test_results["search"] = job["search"]
+        test_results["splunk_search"] = splunk_search
         test_results["resultCount"] = job['resultCount']
         test_results["messages"] = job["messages"]
-        test_results["normalizedSearch"] = job["normalizedSearch"]
-        test_results["remoteSearch"] = job["remoteSearch"]
-        test_results["reportSearch"] = job["reportSearch"]
-        test_results["pid"] = job["pid"]
-        test_results["sid"] = job["sid"]
-        test_results["eventAvailableCount"] = job["eventAvailableCount"]
-        test_results["eventCount"] = job["eventCount"]
-        test_results["eventFieldCount"] = job["eventFieldCount"]
-        test_results["eventSearch"] = job["eventSearch"]
-        test_results["isFailed"] = job["isFailed"]
-        test_results["ttl"] = job["ttl"]
 
     except Exception as exc:
         log.info(f"Caught an exception during updating test_results in test_baseline_search, exception: {exc}")
@@ -116,20 +105,9 @@ def test_detection_search(splunk_host, splunk_password, search, pass_condition, 
         test_results['detection_name'] = detection_name
         test_results['detection_file'] = detection_file
         test_results['scanCount'] = job['scanCount']
-        test_results["search"] = job["search"]
+        test_results["splunk_search"] = splunk_search
         test_results["resultCount"] = job['resultCount']
         test_results["messages"] = job["messages"]
-        test_results["normalizedSearch"] = job["normalizedSearch"]
-        test_results["remoteSearch"] = job["remoteSearch"]
-        test_results["reportSearch"] = job["reportSearch"]
-        test_results["pid"] = job["pid"]
-        test_results["sid"] = job["sid"]
-        test_results["eventAvailableCount"] = job["eventAvailableCount"]
-        test_results["eventCount"] = job["eventCount"]
-        test_results["eventFieldCount"] = job["eventFieldCount"]
-        test_results["eventSearch"] = job["eventSearch"]
-        test_results["isFailed"] = job["isFailed"]
-        test_results["ttl"] = job["ttl"]
 
     except Exception as exc:
         log.info(f"Caught an exception during updating test_results in test_detection_search, exception: {exc}")
