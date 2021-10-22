@@ -15,7 +15,7 @@
 ## Purpose 🛡
 The Attack Range is a detection development platform, which solves three main challenges in detection engineering:
 * **1.** The user is able to quickly build a small lab infrastructure as close as possible to a production environment.
-* **2.** The Attack Range performs attack simulation using different engines such as Atomic Red Team or Caldera in order to generate real attack data. 
+* **2.** The Attack Range performs attack simulation using different engines such as Atomic Red Team or Caldera in order to generate real attack data.
 * **3.** It integrates seamlessly into any Continuous Integration / Continuous Delivery (CI/CD) pipeline to automate the detection rule testing process.
 
 
