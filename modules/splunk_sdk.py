@@ -3,7 +3,6 @@ from time import sleep
 import splunklib.results as results
 import splunklib.client as client
 import splunklib.results as results
-import inspect
 import requests
 
 def test_baseline_search(splunk_host, splunk_password, search, pass_condition, baseline_name, baseline_file, earliest_time, latest_time, log, rest_port=8089):
