@@ -27,7 +27,7 @@
 
 
 - name: running DataManipulation.py, update_timestamp set
-  shell:
+  ansible.builtin.shell:
     cmd: /usr/bin/python3 DataManipulation.py --path /tmp/{{dump_name}}/{{out}} --source {{source}} --sourcetype {{sourcetype}}
     chdir: /tmp/
   when: update_timestamp | bool
